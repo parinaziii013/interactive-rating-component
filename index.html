@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Interactive Rating Component</title>
+    <link rel="icon" href="./favicon-32x32.png">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
+    <link rel="stylesheet" href="./css/all.css">
+    <style>
+        @font-face {
+        font-family: 'MyCustomFont';
+        src: url('././Overpass-Regular.ttf') format('woff2');
+        }
+        
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'MyCustomFont', sans-serif;
+        }
+
+        .main {
+            width: 1365px;
+            height: 629px;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: hsl(216, 12%, 8%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .container {
+            width: 450px;
+            height: 450px;
+            margin: 0 auto;
+            border-radius: 25px;
+            background-color: hsl(213, 19%, 18%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #details {
+            width: 90%;
+            height: auto;
+            margin: auto;
+        }
+
+        .fa-solid {
+            width: 50px;
+            height: 50px;
+            background-color: hsl(213, 16%, 34%);
+            padding: 15px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: hsl(0, 0%, 100%);
+            font-weight: 700;
+            margin-top: 30px;
+        }
+
+        .main-p {
+            width: 100%;
+            font-size: 15px;
+            color: hsl(217, 12%, 63%);
+            word-spacing: 3px;
+            margin-top: 30px;
+            line-height: 30px;
+        }
+
+        .ratings {
+            width: 100%;
+            height: auto;
+            color: hsl(217, 12%, 63%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+           
+        }
+
+        .ratings-number {
+            width: 50px;
+            height: 50px;
+            background-color: hsl(213, 16%, 34%);
+            padding: 27px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin: 20px 20px 20px  0;
+            font-size: 20px;
+        }
+
+        .ratings-number:hover {
+            background-color: #fb7413;
+            cursor: pointer;
+            color: hsl(0, 0%, 100%);
+        }
+
+        #thankYou {
+            display: none;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            background-color: #fb7413;
+            border-radius: 30px;
+            border: none;
+            padding: 15px;
+            color: hsl(0, 0%, 100%);
+            font-weight: 700;
+            font-size: 15px;
+            display: block;
+        }
+
+        button[type="submit"]:hover {
+            background-color: hsl(0, 0%, 100%);
+            color: #fb7413;
+            cursor: pointer;
+        }
+
+        img {
+            
+            margin-top: 40px;
+        }
+
+        .user-rating {
+            margin-top: 40px;
+            background-color: hsl(213, 16%, 34%);
+            color: #fb7413;
+            padding: 12px;
+            border-radius: 30px;
+        }
+
+        h1 {
+            margin-top: 40px;
+            color: white;
+        }
+
+        .thanks-text {
+            width: 95%;
+            margin-top: 30px;
+            text-align: center;
+            color: hsl(217, 12%, 63%);
+            word-spacing: 3px;
+            line-height: 25px;
+        }
+
+        @media screen and (max-width: 460px) {
+            .main {
+                width: 100%;
+                height: 100%;
+            }
+
+            .container {
+                width: 90%;
+                height: 450px;
+            }
+
+            .ratings {
+                width: 100%;
+            }
+
+            .ratings-number {
+                padding: 10px;
+                margin: 8px 8px 8px  0;
+                font-size: 12px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main">
+        <div class="container">
+            <div id="details">
+                <i class="fa-solid fa-star" style="color: #fb7413;"></i>
+                <h1>How did we do?</h1>
+                <p class="main-p">
+                    Please let us know how we did with your support request.
+                    All feedback is appreciated to help us improve our offering!
+                </p>
+                <form>
+                    <div class="ratings">
+                        <p class="ratings-number" id="1">1</p>
+                        <p class="ratings-number" id="2">2</p>
+                        <p class="ratings-number" id="3">3</p>
+                        <p class="ratings-number" id="4">4</p>
+                        <p class="ratings-number" id="5">5</p>
+                      </div>
+                    <button type="submit" id="buton-submit" disabled>Submit</button>
+                </form>
+            </div>
+            <div id="thankYou">
+                <img src="./illustration-thank-you.svg">
+                <p class="user-rating"></p>
+                <h1>Thank You!</h1>
+                <p class="thanks-text">We appreciate you taking the time to give a rating.
+                    If you ever need more support, don't hesitate to get in touch!
+                </p>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+//First Way
+//Rating system with forEach function
+//   const paragraphs = document.querySelectorAll('.ratings-number');
+//   const submitButton = document.querySelector('button[type="submit"]');
+
+//   let previousParagraph;
+//   paragraphs.forEach((paragraph) => {
+//     paragraph.addEventListener('click', () => {
+//       if (previousParagraph) {
+//         previousParagraph.style.backgroundColor = '';
+//       }
+//       paragraph.style.backgroundColor = "hsl(217, 12%, 63%)";
+//       paragraph.style.color = 'white';
+
+//       previousParagraph = paragraph;
+
+//       submitButton.disabled = false;  //enable button when user clicked on one of the ratings;
+//     });
+//   });
+
+
+//Second Way
+//Rating system with for Loop
+const paragraphs = document.getElementsByClassName('ratings-number');
+const submitButton = document.getElementById("buton-submit");
+const thankYou = document.getElementById("thankYou");
+const details = document.getElementById("details");
+const userRating = document.getElementsByClassName('user-rating');
+
+let previousRating;
+for (let i = 0; i < paragraphs.length; i++) {
+
+    paragraphs[i].addEventListener('click', () => {
+        if(previousRating) {
+            previousRating.style.backgroundColor = ''
+        }
+        paragraphs[i].style.backgroundColor = "hsl(217, 12%, 63%)";
+        paragraphs[i].style.color = "white";
+
+        previousRating = paragraphs[i];
+
+        submitButton.disabled = false;  //enable button when user clicked on one of the ratings;
+    }) 
+}
+
+
+let selectedRating;
+
+for (let i = 0; i < paragraphs.length; i++) {
+    paragraphs[i].addEventListener('click', (event) => {
+    event.preventDefault();
+    selectedRating = paragraphs[i].innerHTML
+    console.log(selectedRating = paragraphs[i].innerHTML) // example: 3
+  });
+}
+
+submitButton.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  details.style.display = 'none';
+  thankYou.style.display = 'flex';
+  thankYou.style.justifyContent = 'center';
+  thankYou.style.flexDirection = 'column';
+  thankYou.style.alignItems = 'center';
+
+  userRating[0].innerHTML = `You selected ${selectedRating} out of 5`;
+    console.log(`You selected ${selectedRating} out of 5`) //example: You selected 3 out of 5
+  // Even we click several ratings, it shows the last one 
+});
+
+</script>
+
+</body>
+</html>
